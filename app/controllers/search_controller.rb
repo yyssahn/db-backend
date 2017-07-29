@@ -1,7 +1,8 @@
 class SearchController < ApplicationController
   include Response
   def json
-    puts 'dd'
+    puts params[:zipcode]
+    puts params[:budget]
     render html: '<h1>dd<h1>'
 
   end

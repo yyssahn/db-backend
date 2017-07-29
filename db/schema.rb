@@ -13,6 +13,15 @@
 ActiveRecord::Schema.define(version: 20170729055413) do
 
   create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.string "address"
+    t.string "city"
+    t.string "storeid"
+    t.string "storename"
+    t.string "zipcode"
+    t.string "productname"
+    t.decimal "price", precision: 2
+    t.decimal "thc", precision: 10
+    t.decimal "thcvalue", precision: 10
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
