@@ -16,7 +16,10 @@ class SearchController < ApplicationController
       @originAddress = getOriginAddress response.parsed_response["results"][0]
       url = "https://admin.duberex.com/retailers.json?state=#{@originAddress[:state]}"
       response = HTTParty.get(url)
-      getCloseStores response.parsed_response, @originAddress
+      @storesInState = getStoresInState response.parsed_response, @originAddress
+      @storesInStateInfo = getStoresInStateInfo @storesInState, @originAddress
+      @closeStores = getCloseStores @storesInState, @storesInStateInfo
+      json_response @closeStores
     else
       json_response @products
     end
