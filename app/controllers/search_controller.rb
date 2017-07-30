@@ -1,6 +1,7 @@
 class SearchController < ApplicationController
   include Response
   include Locationconcern
+  include Productconcern
   require 'httparty'
   require 'openssl'
 
@@ -19,6 +20,8 @@ class SearchController < ApplicationController
       @storesInState = getStoresInState response.parsed_response, @originAddress
       @storesInStateInfo = getStoresInStateInfo @storesInState, @originAddress
       @closeStores = getCloseStores @storesInState, @storesInStateInfo
+
+      getProductsFromStore @closeStores, params[:budget]
       json_response @closeStores
     else
       json_response @products
