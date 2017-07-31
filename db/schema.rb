@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20170729055413) do
     t.decimal "price", precision: 2
     t.decimal "thc", precision: 10
     t.decimal "thcvalue", precision: 10
+    t.integer "numtimesseen", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

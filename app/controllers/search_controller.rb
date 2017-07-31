@@ -2,8 +2,10 @@ class SearchController < ApplicationController
   include Response
   include Locationconcern
   include Productconcern
+  include Productfilterconcern
   require 'httparty'
   require 'openssl'
+
 
   OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
   def json
@@ -21,11 +23,24 @@ class SearchController < ApplicationController
       @storesInStateInfo = getStoresInStateInfo @storesInState, @originAddress
       @closeStores = getCloseStores @storesInState, @storesInStateInfo
 
-      getProductsFromStore @closeStores, params[:budget]
-      json_response @closeStores
+      @getProducts = getProductsFromStore @closeStores, params[:zipcode], params[:budget]
+      @filteredList = getHighestTHC @getProducts, params[:budget].to_f
+      @filteredList.each do |item|
+        product = Product.new(:address => item[:address], :city => item[:city], :price => item[:price], :productname => item[:productname], :storeid =>item[:storeid], :storename => item[:storename], :thc => item[:thc], :zipcode => item[:zipcode], :thcvalue => item[:thc_value])
+        product.save
+      end
+      puts @products.length
+      json_response @filteredList
     else
+      @products.each do | product |
+        product.numtimesseen = product.numtimesseen + 1
+        product.save
+      end
       json_response @products
     end
 
   end
+
+
+
 end

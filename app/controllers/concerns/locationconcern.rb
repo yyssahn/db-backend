@@ -55,11 +55,11 @@ module Locationconcern
   def getStoresInStateInfo (stores, origin)
 
     destinationquery = stores[0]["address"] + ',' + stores[0]["city"]
-    puts destinationquery
+    #puts destinationquery
     for i in 1..(stores.length-1)
       destinationquery = destinationquery + "|" +stores[i]["address"] + ',' + stores[i]["city"]
     end
-    puts destinationquery
+    #puts destinationquery
     closeStores = []
     url = "https://maps.googleapis.com/maps/api/distancematrix/json?" + "units=imperial" + "&origins="+origin[:lat].to_s + "," + origin[:lng].to_s  + "&destinations=" + destinationquery + "&key=AIzaSyABFzbmnvMJT_r9a7OaHLD7Z5oTeHkvyyo"
     response = HTTParty.get(url) #:query =>{:units => "imperial" , :origins => origin[:lat].to_s + "," + origin[:lng].to_s, :destinations => destinationquery, :key => 'AIzaSyABFzbmnvMJT_r9a7OaHLD7Z5oTeHkvyyo'})
@@ -69,7 +69,7 @@ module Locationconcern
 
   def getCloseStores(stores, storeInfo)
     closeStores = []
-    puts storeInfo["rows"][0]["elements"][0]["distance"]["value"]
+    #puts storeInfo["rows"][0]["elements"][0]["distance"]["value"]
     for i in 1..(stores.length-1)
           if (storeInfo["rows"][0]["elements"][i]["distance"]["value"] < 32187)
             closeStores.push(stores[i])

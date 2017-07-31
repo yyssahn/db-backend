@@ -10,6 +10,7 @@ class CreateProducts < ActiveRecord::Migration[5.1]
       t.decimal "price", :precision => 2
       t.decimal "thc"
       t.decimal "thcvalue"
+      t.integer "numtimesseen", :default=> 0
       t.timestamps
     end
   end
